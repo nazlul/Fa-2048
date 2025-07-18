@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { PrivyProvider } from "@privy-io/react-auth";
 import ClientLayout from "./ClientLayout";
 
 const geistSans = Geist({

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Game2048 from "./Game2048";
 
 export default function Home() {

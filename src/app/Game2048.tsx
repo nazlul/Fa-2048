@@ -52,7 +52,6 @@ function reverse(board: number[][]) {
 }
 
 function moveLeft(board: number[][]) {
-  let moved = false;
   let score = 0;
   const newBoard = board.map((row) => {
     let arr = row.filter((x) => x !== 0);
@@ -61,14 +60,13 @@ function moveLeft(board: number[][]) {
         arr[i] *= 2;
         score += arr[i];
         arr[i + 1] = 0;
-        moved = true;
       }
     }
     arr = arr.filter((x) => x !== 0);
     while (arr.length < 4) arr.push(0);
-    if (!moved && arr.some((v, i) => v !== row[i])) moved = true;
     return arr;
   });
+  const moved = board.some((row, i) => row.some((cell, j) => cell !== newBoard[i][j]));
   return { newBoard, moved, score };
 }
 
