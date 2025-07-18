@@ -52,20 +52,23 @@ function reverse(board: number[][]) {
 }
 
 function moveLeft(board: number[][]) {
-  let score = 0;
-  const newBoard = board.map((row) => {
-    let arr = row.filter((x) => x !== 0);
-    for (let i = 0; i < arr.length - 1; i++) {
-      if (arr[i] === arr[i + 1]) {
-        arr[i] *= 2;
-        score += arr[i];
-        arr[i + 1] = 0;
+  const { newBoard, score } = board.reduce(
+    (acc, row, i) => {
+      let arr = row.filter((x) => x !== 0);
+      for (let j = 0; j < arr.length - 1; j++) {
+        if (arr[j] === arr[j + 1]) {
+          arr[j] *= 2;
+          acc.score += arr[j];
+          arr[j + 1] = 0;
+        }
       }
-    }
-    arr = arr.filter((x) => x !== 0);
-    while (arr.length < 4) arr.push(0);
-    return arr;
-  });
+      arr = arr.filter((x) => x !== 0);
+      while (arr.length < 4) arr.push(0);
+      acc.newBoard.push(arr);
+      return acc;
+    },
+    { newBoard: [], score: 0 } as { newBoard: number[][]; score: number }
+  );
   const moved = board.some((row, i) => row.some((cell, j) => cell !== newBoard[i][j]));
   return { newBoard, moved, score };
 }
