@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { usePrivy, useLogin } from "@privy-io/react-auth";
 
-// Classic 2048 colors
 const tileColors: Record<number, string> = {
   0: "#cdc1b4",
   2: "#eee4da",
@@ -53,7 +52,7 @@ function reverse(board: number[][]) {
 
 function moveLeft(board: number[][]) {
   const { newBoard, score } = board.reduce(
-    (acc, row, i) => {
+    (acc, row) => {
       let arr = row.filter((x) => x !== 0);
       for (let j = 0; j < arr.length - 1; j++) {
         if (arr[j] === arr[j + 1]) {
@@ -78,10 +77,10 @@ function move(board: number[][], dir: "left" | "right" | "up" | "down") {
   if (dir === "up") rotated = transpose(board);
   if (dir === "down") rotated = reverse(transpose(board));
   if (dir === "right") rotated = reverse(board);
-  let { newBoard, moved, score } = moveLeft(rotated);
-  if (dir === "up") newBoard = transpose(newBoard);
-  if (dir === "down") newBoard = transpose(reverse(newBoard));
-  if (dir === "right") newBoard = reverse(newBoard);
+  const { newBoard, moved, score } = moveLeft(rotated);
+  if (dir === "up") return { newBoard: transpose(newBoard), moved, score };
+  if (dir === "down") return { newBoard: transpose(reverse(newBoard)), moved, score };
+  if (dir === "right") return { newBoard: reverse(newBoard), moved, score };
   return { newBoard, moved, score };
 }
 
@@ -185,7 +184,6 @@ const Game2048: React.FC = () => {
         >
           Restart
         </button>
-        {/* Share button placeholder */}
         <button
           className="bg-[#f67c5f] text-white px-4 py-2 rounded font-bold hover:bg-[#f65e3b]"
           disabled
@@ -199,11 +197,9 @@ const Game2048: React.FC = () => {
       {won && (
         <div className="text-green-600 font-bold text-xl mb-2">You Win!</div>
       )}
-      {/* Highscore section placeholder */}
       <div className="mt-8 w-full max-w-md">
         <h2 className="text-xl font-bold mb-2 text-[#776e65]">Highscores</h2>
         <div className="bg-[#eee4da] rounded p-4 text-[#776e65]">
-          {/* Highscore list will go here */}
           <div className="italic">Coming soon...</div>
         </div>
       </div>
@@ -211,4 +207,4 @@ const Game2048: React.FC = () => {
   );
 };
 
-export default Game2048; 
+export default Game2048;
