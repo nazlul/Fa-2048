@@ -53,7 +53,7 @@ function reverse(board: number[][]) {
 
 function moveLeft(board: number[][]) {
   let moved = false;
-  const score = 0;
+  let score = 0;
   const newBoard = board.map((row) => {
     let arr = row.filter((x) => x !== 0);
     for (let i = 0; i < arr.length - 1; i++) {
