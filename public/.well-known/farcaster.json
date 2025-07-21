@@ -1,1 +1,28 @@
-{"frame":{"name":"2048","tags":["games","2048"],"homeUrl":"https://fa-2048.vercel.app","iconUrl":"https://fa-2048.vercel.app/banner.png","version":"1","imageUrl":"https://fa-2048.vercel.app/banner.png","subtitle":"2048 GAME","webhookUrl":"https://fa-2048.vercel.app/api/webhook","description":"The Classic 2048 game","heroImageUrl":"https://fa-2048.vercel.app/banner.png","screenshotUrls":["https://fa-2048.vercel.app/banner.png"],"splashImageUrl":"https://fa-2048.vercel.app/banner.png","primaryCategory":"games","splashBackgroundColor":"#17101f"},"accountAssociation":{"header":"","payload":"","signature":""}}
+{
+    "frame": {
+      "name": "2048",
+      "version": "1",
+      "iconUrl": "https://fa-2048.vercel.app/banner.png",
+      "homeUrl": "https://fa-2048.vercel.app",
+      "imageUrl": "https://fa-2048.vercel.app/banner.png",
+      "splashImageUrl": "https://fa-2048.vercel.app/banner.png",
+      "splashBackgroundColor": "#17101f",
+      "webhookUrl": "https://fa-2048.vercel.app/api/webhook",
+      "subtitle": "2048 GAME",
+      "description": "The Classic 2048 game",
+      "screenshotUrls": [
+        "https://fa-2048.vercel.app/banner.png"
+      ],
+      "primaryCategory": "games",
+      "tags": [
+        "games",
+        "2048"
+      ],
+      "heroImageUrl": "https://fa-2048.vercel.app/banner.png"
+    },
+    "accountAssociation": {
+      "header": "eyJmaWQiOjI0ODQ5MiwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDEyMWQ5NjdEZmM2Y2RlMTM0NjIyOEMxNjc4NjBBMGE4ODE5MjU4ZjcifQ",
+      "payload": "eyJkb21haW4iOiJmYS0yMDQ4LnZlcmNlbC5hcHAifQ",
+      "signature": "MHhhYjdiNjYyMGVlMjA0ZTI1ZTM0NWM1ZGRkNzgyNWNlYmVkOGEwZWZhYmQ2YzMxMTllN2VmZWFhOWQwZTY3NGZlMDU0OWVmMDFiNjEyOGY1M2UzYmEyYTM0YzFiMzkyZTE0ZWRjNTE0MjU3NjZlN2Y5ODYzMjc2NTIzMGMxZmE2YjFi"
+    }
+  }
