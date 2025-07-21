@@ -2,10 +2,10 @@
     "frame": {
       "name": "2048",
       "version": "1",
-      "iconUrl": "https://fa-2048.vercel.app/banner.png",
+      "iconUrl": "https://fa-2048.vercel.app/logo.png",
       "homeUrl": "https://fa-2048.vercel.app",
       "imageUrl": "https://fa-2048.vercel.app/banner.png",
-      "splashImageUrl": "https://fa-2048.vercel.app/banner.png",
+      "splashImageUrl": "https://fa-2048.vercel.app/splash.png",
       "splashBackgroundColor": "#17101f",
       "webhookUrl": "https://fa-2048.vercel.app/api/webhook",
       "subtitle": "2048 GAME",
