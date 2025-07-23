@@ -238,6 +238,12 @@ const Game2048: React.FC = () => {
     userName = String(user.email.address);
   }
 
+  // Share to Farcaster handler
+  const shareToFarcaster = () => {
+    const text = encodeURIComponent("Play 2048 on Farcaster! https://farcaster.xyz/miniapps/vu0eaa6LJ0gM/2048");
+    window.open(`https://warpcast.com/~/compose?text=${text}`, "_blank");
+  };
+
   return (
     <div
       className="flex flex-col items-center"
@@ -274,7 +280,7 @@ const Game2048: React.FC = () => {
         <div className="bg-[#bbada0] rounded px-4 py-2 text-white font-bold text-lg">Score: {score}</div>
         <div className="bg-[#bbada0] rounded px-4 py-2 text-white font-bold text-lg">Highscore: {highscore}</div>
       </div>
-      <div className="relative bg-[#bbada0] p-4 rounded-lg shadow-lg mb-4" style={{ width: 288, height: 288 }}>
+      <div className="relative bg-[#bbada0] p-4 rounded-lg shadow-lg mb-4" style={{ width: 352, height: 352 }}>
         {(gameOver || won) && (
           <div
             className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-60 z-10 rounded-lg"
@@ -291,12 +297,12 @@ const Game2048: React.FC = () => {
             </button>
           </div>
         )}
-        <div className="grid grid-cols-4 gap-2 relative z-0" style={{ width: 256, height: 256 }}>
+        <div className="grid grid-cols-4 gap-2 relative z-0" style={{ width: 320, height: 320 }}>
           {board.map((row, r) =>
             row.map((cell, c) => (
               <div
                 key={`${r}-${c}`}
-                className="w-16 h-16 flex items-center justify-center rounded font-bold text-2xl"
+                className="w-20 h-20 flex items-center justify-center rounded font-bold text-2xl"
                 style={{
                   background: tileColors[cell] || "#3c3a32",
                   color: cell <= 4 ? "#776e65" : "#f9f6f2",
@@ -318,7 +324,7 @@ const Game2048: React.FC = () => {
         </button>
         <button
           className="bg-[#f67c5f] text-white px-4 py-2 rounded font-bold hover:bg-[#f65e3b]"
-          disabled
+          onClick={shareToFarcaster}
         >
           Share to Farcaster
         </button>
