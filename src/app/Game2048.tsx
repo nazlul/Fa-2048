@@ -151,6 +151,23 @@ const Game2048: React.FC = () => {
   const [won, setWon] = useState(false);
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
   const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+  const [highscore, setHighscore] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("highscore");
+      if (stored) setHighscore(Number(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (score > highscore) {
+      setHighscore(score);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("highscore", String(score));
+      }
+    }
+  }, [score, highscore]);
 
   const handleMove = useCallback(
     (dir: "left" | "right" | "up" | "down") => {
@@ -211,6 +228,16 @@ const Game2048: React.FC = () => {
     setWon(false);
   };
 
+  const userPfp = user?.farcaster?.pfp ?? null;
+  let userName: string = "User";
+  if (user?.farcaster?.username) {
+    userName = user.farcaster.username;
+  } else if (typeof user?.email === "string") {
+    userName = user.email;
+  } else if (user?.email && typeof user.email === "object" && "address" in user.email) {
+    userName = String(user.email.address);
+  }
+
   return (
     <div
       className="flex flex-col items-center"
@@ -230,17 +257,41 @@ const Game2048: React.FC = () => {
             Sign in with Farcaster
           </button>
         ) : (
-          <div className="text-[#776e65] font-bold mb-2">
-            Signed in as {user?.farcaster?.username} (FID: {user?.farcaster?.fid})
+          <div className="flex items-center text-[#776e65] font-bold mb-2 gap-2">
+            {userPfp && (
+              <img
+                src={userPfp}
+                alt="pfp"
+                className="w-8 h-8 rounded-full border border-[#bbada0]"
+                style={{ objectFit: "cover" }}
+              />
+            )}
+            <span>Signed in as {userName} (FID: {user?.farcaster?.fid})</span>
           </div>
         )}
       </div>
       <div className="flex gap-4 mb-4">
         <div className="bg-[#bbada0] rounded px-4 py-2 text-white font-bold text-lg">Score: {score}</div>
-        <div className="bg-[#bbada0] rounded px-4 py-2 text-white font-bold text-lg">Highscore: --</div>
+        <div className="bg-[#bbada0] rounded px-4 py-2 text-white font-bold text-lg">Highscore: {highscore}</div>
       </div>
-      <div className="bg-[#bbada0] p-4 rounded-lg shadow-lg mb-4">
-        <div className="grid grid-cols-4 gap-2">
+      <div className="relative bg-[#bbada0] p-4 rounded-lg shadow-lg mb-4" style={{ width: 288, height: 288 }}>
+        {(gameOver || won) && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-60 z-10 rounded-lg"
+            style={{ pointerEvents: "auto" }}
+          >
+            <div className={`text-3xl font-bold mb-2 ${won ? "text-green-300" : "text-red-300"}`}>
+              {won ? "You Win!" : "Game Over!"}
+            </div>
+            <button
+              className="bg-[#8f7a66] text-white px-4 py-2 rounded font-bold hover:bg-[#a39489] mt-2"
+              onClick={restart}
+            >
+              Restart
+            </button>
+          </div>
+        )}
+        <div className="grid grid-cols-4 gap-2 relative z-0" style={{ width: 256, height: 256 }}>
           {board.map((row, r) =>
             row.map((cell, c) => (
               <div
@@ -272,16 +323,19 @@ const Game2048: React.FC = () => {
           Share to Farcaster
         </button>
       </div>
-      {gameOver && (
-        <div className="text-red-600 font-bold text-xl mb-2">Game Over!</div>
-      )}
-      {won && (
-        <div className="text-green-600 font-bold text-xl mb-2">You Win!</div>
-      )}
       <div className="mt-8 w-full max-w-md">
         <h2 className="text-xl font-bold mb-2 text-[#776e65]">Highscores</h2>
-        <div className="bg-[#eee4da] rounded p-4 text-[#776e65]">
-          <div className="italic">Coming soon...</div>
+        <div className="bg-[#eee4da] rounded p-4 text-[#776e65] flex items-center gap-2">
+          {userPfp && (
+            <img
+              src={userPfp}
+              alt="pfp"
+              className="w-8 h-8 rounded-full border border-[#bbada0]"
+              style={{ objectFit: "cover" }}
+            />
+          )}
+          <span className="font-bold">{userName}</span>
+          <span>Highscore: {highscore}</span>
         </div>
       </div>
     </div>
