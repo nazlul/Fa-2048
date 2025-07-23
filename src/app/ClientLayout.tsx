@@ -6,9 +6,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (
       typeof window !== "undefined" &&
-      (window as any).privy?.actions?.ready
+      window.privy?.actions?.ready
     ) {
-      (window as any).privy.actions.ready();
+      window.privy.actions.ready();
     }
   }, []);
 
