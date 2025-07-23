@@ -121,8 +121,6 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  // Parse Farcaster signature from the request body (for real use, verify it)
-  // For now, just respond with a "Signed in!" message
   return new Response(
     `
     <html>
@@ -151,6 +149,8 @@ const Game2048: React.FC = () => {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [won, setWon] = useState(false);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
 
   const handleMove = useCallback(
     (dir: "left" | "right" | "up" | "down") => {
@@ -178,6 +178,32 @@ const Game2048: React.FC = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [handleMove]);
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setTouchEnd(null);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setTouchEnd({ x: touch.clientX, y: touch.clientY });
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const dx = touchEnd.x - touchStart.x;
+    const dy = touchEnd.y - touchStart.y;
+    if (Math.abs(dx) > Math.abs(dy)) {
+      if (dx > 30) handleMove("right");
+      else if (dx < -30) handleMove("left");
+    } else {
+      if (dy > 30) handleMove("down");
+      else if (dy < -30) handleMove("up");
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   const restart = () => {
     setBoard(initialBoard());
     setScore(0);
@@ -186,7 +212,13 @@ const Game2048: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div
+      className="flex flex-col items-center"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+      style={{ touchAction: "none" }}
+    >
       <div className="mb-4 w-full flex flex-col items-center">
         {!ready ? (
           <div className="text-[#776e65]">Loading authentication...</div>
