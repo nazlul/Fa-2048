@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@farcaster/miniapp-sdk": "^0.1.7",
     "@privy-io/react-auth": "^2.18.2",
     "@standard-crypto/farcaster-js-neynar": "^2.0.2",
     "axios": "^1.6.8",
